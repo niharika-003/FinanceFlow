@@ -1,0 +1,299 @@
+* General Page Styling */
+body{
+    margin: auto;
+}
+
+.set-budget-page {
+  background-color: #2c3e50; 
+  color: #ecf0f1; 
+  padding: 30px;
+  max-width: 900px; 
+  margin: 30px auto; 
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.page-header h1 {
+  font-size: 2.2em;
+  color: #3498db; 
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Notification Styling */
+.notification {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.notification.info {
+  background-color: #3498db; 
+  color: white;
+}
+
+.notification.success {
+  background-color: #27ae60; 
+  color: white;
+}
+
+.notification.error {
+  background-color: #e74c3c; 
+  color: white;
+}
+
+.notification .fa-icon { 
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+
+.budget-summary-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #34495e; 
+  padding: 20px 30px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.income-input-group label {
+  display: block;
+  font-size: 0.9em;
+  color: #bdc3c7;
+  margin-bottom: 5px;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon .currency-symbol {
+  font-size: 1.5em;
+  margin-right: 5px;
+  color: #3498db;
+}
+
+.income-input-group input,
+.category-allocation-input input,
+.savings-goal-section input {
+  background-color: #49637c; 
+  border: 1px solid #5a7b9c;
+  border-radius: 5px;
+  padding: 10px 12px;
+  color: #ecf0f1;
+  font-size: 1.1em;
+  width: 150px; 
+  outline: none;
+}
+.income-input-group input {
+    width: 200px; 
+}
+
+
+.income-input-group input:focus,
+.category-allocation-input input:focus,
+.savings-goal-section input:focus,
+.custom-category-name-input:focus { 
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.available-display {
+  text-align: right;
+}
+
+.available-display span:first-child {
+  display: block;
+  font-size: 0.9em;
+  color: #bdc3c7;
+  margin-bottom: 5px;
+}
+
+.available-amount {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #27ae60; 
+}
+.available-amount.negative {
+    color: #e74c3c; 
+}
+
+
+
+.expense-categories-section h2 {
+  font-size: 1.8em;
+  color: #ecf0f1;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #49637c;
+  padding-bottom: 10px;
+}
+
+.categories-list {
+  margin-bottom: 20px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px dashed #49637c;
+}
+.category-item:last-child {
+    border-bottom: none;
+}
+
+
+.category-info {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.category-info .fa-svg-icon { 
+  margin-right: 15px;
+  color: #3498db;
+  font-size: 1.3em;
+  width: 25px; 
+  text-align: center;
+}
+
+
+.custom-category-name-input {
+    background-color: transparent; 
+    border: 1px solid transparent; 
+    border-bottom: 1px dashed #5a7b9c; 
+    color: #ecf0f1;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 2px 5px;
+    margin-left: -5px; 
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 150px; 
+}
+
+.custom-category-name-input:focus {
+    border-color: #3498db; 
+}
+
+
+.category-allocation-input {
+  display: flex;
+  align-items: center;
+}
+
+.category-allocation-input input {
+  width: 100px; 
+  margin-left: 10px;
+}
+
+.remove-category-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  margin-left: 15px;
+  font-size: 1.2em;
+  transition: color 0.2s ease;
+}
+.remove-category-btn:hover {
+    color: #c0392b;
+}
+
+
+.add-category-btn {
+  background-color: #27ae60; 
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+.add-category-btn .fa-svg-icon {
+    font-size: 1.1em;
+}
+
+.add-category-btn:hover {
+  background-color: #229954;
+}
+
+/* Savings Goal Section */
+.savings-goal-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #49637c;
+}
+
+.savings-goal-section .fa-svg-icon {
+  font-size: 1.5em;
+  color: #f1c40f; 
+}
+
+.savings-goal-section label {
+  font-size: 1.1em;
+  font-weight: 500;
+  flex-grow: 1; 
+}
+
+.savings-goal-section input {
+    width: 120px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin-top: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.save-budget-btn,
+.reset-budget-btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-budget-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.save-budget-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.reset-budget-btn {
+  background-color: #7f8c8d; 
+  color: white;
+}
+
+.reset-budget-btn:hover {
+  background-color: #6c7a7d;
+  transform: translateY(-2px);
+}

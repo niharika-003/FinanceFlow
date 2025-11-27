@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa; 
+  color: #333; 
+}
+
+
+.about-section {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  padding: 40px 20px; 
+  background: linear-gradient(135deg, #e0f2f7, #c1e7f0); 
+  min-height: 80vh; 
+  text-align: center; 
+  box-sizing: border-box; 
+  overflow: hidden; 
+}
+
+.about-content {
+  margin-bottom: 40px; 
+  max-width: 600px; 
+}
+
+.about-title {
+  font-size: 2.5rem; 
+  font-weight: 800; 
+  color: #2c3e50; 
+  margin-bottom: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em; 
+}
+
+.about-description {
+  font-size: 1.2rem;
+  color: #5d6d7e; 
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+
+.about-startnow-btn {
+  display: inline-block;
+  background-color: #3AB09E; 
+  color: #ffffff; 
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 15px 35px;
+  border-radius: 50px; 
+  box-shadow: 0 4px 15px rgba(58, 176, 158, 0.4);
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.05em; 
+  text-transform: uppercase; 
+}
+
+.about-startnow-btn:hover {
+  background-color: #2a8a7a;
+  transform: translateY(-3px); 
+  box-shadow: 0 8px 20px rgba(58, 176, 158, 0.6); 
+}
+
+/* Image Styling  */
+.about-image-container {
+  width: 100%;
+  max-width: 500px; 
+  display: flex; 
+  justify-content: center; 
+}
+
+.about-image {
+  max-width: 90%; 
+  height: auto; 
+  display: block; 
+  border-radius: 15px; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+  animation: float 3s ease-in-out infinite; 
+}
+
+/*  Animation for Image Floating */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+
+/*  Larger Screens */
+@media (min-width: 768px) {
+  .about-section {
+    flex-direction: row; 
+    text-align: left; 
+    justify-content: space-around; 
+    padding: 80px 40px; 
+    min-height: 90vh; 
+  }
+
+  .about-content {
+    margin-right: 60px;
+    margin-bottom: 0; 
+    flex: 1; 
+  }
+
+  .about-title {
+    font-size: 3.5rem;
+  }
+
+  .about-description {
+    font-size: 1.3rem; 
+  }
+
+  .about-image-container {
+    flex: 1; 
+    max-width: 600px; 
+  }
+
+  .about-image {
+    max-width: 100%; 
+  }
+}
+
+/* Even Larger Screens  */
+@media (min-width: 1200px) {
+  .about-section {
+    padding: 100px 80px;
+  }
+  .about-title {
+    font-size: 4rem;
+  }
+}
