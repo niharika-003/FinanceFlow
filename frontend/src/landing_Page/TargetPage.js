@@ -61,7 +61,7 @@ const TargetPage = () => {
       },2000);
     }
     try {
-      const response = await fetch('http://localhost:5000/targets', {
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/targets', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -120,7 +120,7 @@ const TargetPage = () => {
         navigate('/login');
       },2000);
       }
-      const response = await fetch('http://localhost:5000/target', {
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/target', {
         method: 'POST',
         headers: {  'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Include the authentication token
@@ -162,7 +162,7 @@ const TargetPage = () => {
     showNotification('Removing target...', 'info', 0);
 
     try {
-      const response = await fetch(`http://localhost:5000/target/${id}`, {
+      const response = await fetch(`https://financeflow-backend-ao63.onrender.com/target/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

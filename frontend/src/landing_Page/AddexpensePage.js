@@ -58,7 +58,7 @@ const AddexpensePage = () => {
 
       try{
         const currentMonth=new Date().toISOString().slice(0,7); // YYYY-MM
-        const response=await fetch(`http://localhost:5000/budget?month=${currentMonth}`,{
+        const response=await fetch(`https://financeflow-backend-ao63.onrender.com/budget?month=${currentMonth}`,{
           method:'GET',
           headers:{
             'Authorization':`Bearer ${token}`,
@@ -134,7 +134,7 @@ const AddexpensePage = () => {
       },2000);
       }
 
-      const response = await fetch('http://localhost:5000/addexpense', { // Your backend API endpoint
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/addexpense', { // Your backend API endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -48,7 +48,7 @@ const SetbudgetPage = () => {
       const currentMonth = new Date().toISOString().slice(0, 7);
 
       try {
-        const response = await fetch(`http://localhost:5000/budget?month=${currentMonth}`, {
+        const response = await fetch(`https://financeflow-backend-ao63.onrender.com/budget?month=${currentMonth}`, {
           headers: {
             'Authorization': `Bearer ${storedToken}`
           }
@@ -174,7 +174,7 @@ const SetbudgetPage = () => {
       },2000);
 
     try {
-      const response = await fetch('http://localhost:5000/budget', { // Ensure correct URL
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/budget', { // Ensure correct URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

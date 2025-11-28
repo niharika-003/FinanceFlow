@@ -51,16 +51,16 @@ const DashboardPage = () => {
             const currentMonth = new Date().toISOString().slice(0, 7);
 
             try {
-                const budgetRes = await axios.get(`http://localhost:5000/budget?month=${currentMonth}`, config);
+                const budgetRes = await axios.get(`https://financeflow-backend-ao63.onrender.com/budget?month=${currentMonth}`, config);
                 const fetchedBudget = budgetRes.data.budget;
                 setBudget(fetchedBudget);
                  setMonthlyIncomeThisMonth(fetchedBudget?.monthlyIncome || 0); 
 
-                const expensesRes = await axios.get(`http://localhost:5000/expenses?month=${currentMonth}`, config);
+                const expensesRes = await axios.get(`https://financeflow-backend-ao63.onrender.com/expenses?month=${currentMonth}`, config);
                 const fetchedExpenses = expensesRes.data.expenses;
                 setExpenses(fetchedExpenses);
 
-                const targetsRes = await axios.get('http://localhost:5000/targets', config);
+                const targetsRes = await axios.get('https://financeflow-backend-ao63.onrender.com/targets', config);
                 setTargets(targetsRes.data.targets);
 
                 const calculatedTotalSpent = fetchedExpenses.reduce((sum, expense) => sum + expense.amount, 0);
