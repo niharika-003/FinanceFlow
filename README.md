@@ -49,6 +49,20 @@ FinanceFlow solves this problem by enforcing monthly budgeting and providing cle
 
 All collections are linked using "userId" to ensure data isolation and security.
 
+## Screenshots
+
+### Login Page
+![Login](screenshots/FinanceFlow_Login.png)
+
+### Budget Setup Page
+![Budget](screenshots/FinanceFlow_Budgetpage.png)
+
+### Dashboard
+![Dashboard](screenshots/FinanceFlow_Dashboard.png)
+
+### UI
+![UI](screenshots/FinanceFlow_UI.png)
+
 
 ## Future Improvements
 
