@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import './TargetPage.css'; 
-import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 
 library.add(fas);
 
+// --- Notification Component ---
 const Notification = ({ message, type, onClose }) => {
   if (!message) return null;
 
@@ -21,7 +21,6 @@ const Notification = ({ message, type, onClose }) => {
         <FontAwesomeIcon icon={icon} className="notification-icon" />
         <span>{message}</span>
       </div>
-      
       <button className="notification-close-btn" onClick={onClose}>
         <FontAwesomeIcon icon="times" />
       </button>
@@ -30,35 +29,61 @@ const Notification = ({ message, type, onClose }) => {
 };
 
 const TargetPage = () => {
-  const [targets, setTargets] = useState([]); // State to hold multiple targets
+  const [targets, setTargets] = useState([]); 
   const [targetName, setTargetName] = useState('');
   const [estimatedCost, setEstimatedCost] = useState('');
-  const [targetMonth, setTargetMonth] = useState(''); // Format: YYYY-MM
+  const [targetMonth, setTargetMonth] = useState(''); 
   const [notification, setNotification] = useState(null);
+  
+  // NEW STATE: Tracks how much you are allowed to save based on your Budget
+  const [maxSavingsAllowed, setMaxSavingsAllowed] = useState(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date();
-    const currentMonth = today.toISOString().slice(0, 7); // YYYY-MM
+    const currentMonth = today.toISOString().slice(0, 7); 
     setTargetMonth(currentMonth);
     fetchTargets();
+    fetchMonthlySavingsLimit(currentMonth); // Load initial limit
   }, []);
 
   const showNotification = (message, type = 'info', duration = 3000) => {
     setNotification({ message, type });
     if (duration > 0) {
-      setTimeout(() => 
-        setNotification(null), duration);
+      setTimeout(() => setNotification(null), duration);
+    }
+  };
+
+  // --- LOGIC: Fetch the Savings Goal from the Budget Page ---
+  const fetchMonthlySavingsLimit = async (month) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`https://financeflow-backend-ao63.onrender.com/budget?month=${month}`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // This takes the "Monthly Savings Goal" value you set in the Budget Page
+        const limit = data.budget?.monthlySavingsGoal || 0;
+        setMaxSavingsAllowed(limit);
+      } else {
+        setMaxSavingsAllowed(0);
+        console.warn("Could not find a budget for this month.");
+      }
+    } catch (error) {
+      console.error("Error fetching savings limit:", error);
     }
   };
 
   const fetchTargets = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      showNotification('You need to be logged in to view targets.', 'error');
-      setTimeout(()=>{
-        navigate('/login');
-      },2000);
+      showNotification('Please log in to view targets.', 'error');
+      setTimeout(() => navigate('/login'), 2000);
+      return;
     }
     try {
       const response = await fetch('https://financeflow-backend-ao63.onrender.com/targets', {
@@ -72,124 +97,93 @@ const TargetPage = () => {
       if (response.ok) {
         const data = await response.json();
         setTargets(data.targets);
-      } else {
-        const errorData = await response.json();
-        showNotification(`Failed to fetch targets: ${errorData.message || response.statusText}`, 'error');
       }
     } catch (error) {
-      console.error("Error fetching targets:", error);
       showNotification('An error occurred while fetching targets.', 'error');
     }
   };
 
+  const handleMonthChange = (e) => {
+    const selectedMonth = e.target.value;
+    setTargetMonth(selectedMonth);
+    fetchMonthlySavingsLimit(selectedMonth); // Update the limit when month changes
+  };
 
   const handleAddTarget = async () => {
     if (!targetName.trim()) {
-      showNotification('Please enter a name for your target.', 'error');
+      showNotification('Please enter a name for your goal.', 'error');
       return;
     }
-    if (!estimatedCost || Number(estimatedCost) <= 0) {
-      showNotification('Please enter a valid estimated cost for your target.', 'error');
+
+    const cost = Number(estimatedCost);
+
+    // --- STRICT LOGIC CHECK ---
+    if (cost <= 0) {
+      showNotification('Please enter a valid cost.', 'error');
       return;
     }
-    if (!targetMonth) {
-      showNotification('Please select a target month.', 'error');
+
+    if (cost > maxSavingsAllowed) {
+      showNotification(
+        `Strict Limit: Your goal (₹${cost}) cannot exceed your planned savings (₹${maxSavingsAllowed}) for this month.`, 
+        'error'
+      );
       return;
     }
 
     const newTarget = {
-      //id: Date.now(), // Unique ID for mock data
       name: targetName.trim(),
-      estimatedCost: Number(estimatedCost),
-      targetMonth: targetMonth, // YYYY-MM format
-      // status: 'pending', // 'pending', 'achieved', 'shortfall'
+      estimatedCost: cost,
+      targetMonth: targetMonth,
     };
 
-    console.log("Adding New Target:", newTarget);
-    showNotification('Adding target...', 'info', 0);
-    setTimeout(()=>{
-        navigate('/');
-    },2000);
-
+    const token = localStorage.getItem('token');
     try {
-      // Simulate API call to save target
-      const token = localStorage.getItem('token');
-      if (!token) {
-        showNotification('You need to be logged in to add targets.', 'error');
-        setTimeout(()=>{
-        navigate('/login');
-      },2000);
-      }
       const response = await fetch('https://financeflow-backend-ao63.onrender.com/target', {
         method: 'POST',
-        headers: {  'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Include the authentication token
+        headers: {  
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(newTarget),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setTargets(prevTargets => [...prevTargets, data.target]); // Add new target from response
-        showNotification('Target added successfully!', 'success');
-        setTimeout(()=>{
-        navigate('/');
-      },2000);
-        // Clear form
+        setTargets(prev => [...prev, data.target]);
+        showNotification('Goal added successfully!', 'success');
         setTargetName('');
         setEstimatedCost('');
-        setTargetMonth(new Date().toISOString().slice(0, 7)); // Reset to current month
       } else {
         const errorData = await response.json();
-        showNotification(`Failed to add target: ${errorData.message || response.statusText}`, 'error');
+        showNotification(errorData.message || 'Failed to add target.', 'error');
       }
     } catch (error) {
-      console.error("Error adding target:", error);
-      showNotification('An error occurred while adding the target.', 'error');
+      showNotification('An error occurred.', 'error');
     }
   };
 
-  const handleRemoveTarget = async(id) => {
-
+  const handleRemoveTarget = async (id) => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      showNotification('You are not logged in. Please log in to remove targets.', 'error');
-      setTimeout(()=>{
-        navigate('/login');
-      },2000);
-    }
-
-    showNotification('Removing target...', 'info', 0);
-
     try {
       const response = await fetch(`https://financeflow-backend-ao63.onrender.com/target/${id}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Authorization': `Bearer ${token}` },
       });
-
       if (response.ok) {
-        setTargets(prevTargets => prevTargets.filter(target => target._id !== id)); // Filter out the deleted target using _id
-        showNotification('Target removed successfully!', 'success');
-      } else {
-        const errorData = await response.json();
-        showNotification(`Failed to remove target: ${errorData.message || response.statusText}`, 'error');
+        setTargets(prev => prev.filter(t => t._id !== id));
+        showNotification('Goal removed.', 'success');
       }
     } catch (error) {
-      console.error("Error removing target:", error);
-      showNotification('An error occurred while removing the target.', 'error');
+      showNotification('Error removing goal.', 'error');
     }
-  
   };
 
   return (
-    <>
     <div className="target-of-month-page">
       <div className="page-header">
-        <h1>Set Your Monthly Targets</h1>
-        <p>Define your financial goals for the month.</p>
+        <h1>Set Your Monthly Goals</h1>
+        <p>Goals must stay within your monthly savings limit.</p>
       </div>
 
       <Notification
@@ -200,44 +194,55 @@ const TargetPage = () => {
 
       <div className="target-form-container">
         <h2>Add a New Goal</h2>
+
+        {/* Informative box for the user */}
+        <div className="savings-limit-display" style={{ 
+            background: '#f0f9ff', 
+            padding: '15px', 
+            borderRadius: '8px', 
+            marginBottom: '20px', 
+            border: '1px solid #bae6fd' 
+        }}>
+            <p style={{ margin: 0, color: '#0369a1', fontWeight: 'bold' }}>
+                <FontAwesomeIcon icon="info-circle" /> Max Goal Cost for {targetMonth}: ₹{maxSavingsAllowed.toLocaleString()}
+            </p>
+            <small style={{ color: '#0c4a6e' }}>This is your savings goal set in the Budget Page.</small>
+        </div>
+
         <div className="form-group">
-          <label htmlFor="target-name">Goal Name</label>
+          <label>Goal Name</label>
           <div className="input-with-icon">
             <FontAwesomeIcon icon="bullseye" className="input-prefix-icon" />
             <input
               type="text"
-              id="target-name"
               value={targetName}
               onChange={(e) => setTargetName(e.target.value)}
-              placeholder="e.g., Buy new mobile, Save for down payment"
+              placeholder="e.g., Buy Laptop"
             />
           </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="estimated-cost">Estimated Cost</label>
+          <label>Estimated Cost (Must be ≤ ₹{maxSavingsAllowed})</label>
           <div className="input-with-icon">
             <span className="currency-symbol">₹</span>
             <input
               type="number"
-              id="estimated-cost"
               value={estimatedCost}
               onChange={(e) => setEstimatedCost(e.target.value)}
               placeholder="0.00"
-              min="0"
             />
           </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="target-month">Target Month</label>
+          <label>Target Month</label>
           <div className="input-with-icon">
             <FontAwesomeIcon icon="calendar-alt" className="input-prefix-icon" />
             <input
               type="month"
-              id="target-month"
               value={targetMonth}
-              onChange={(e) => setTargetMonth(e.target.value)}
+              onChange={handleMonthChange}
             />
           </div>
         </div>
@@ -248,9 +253,9 @@ const TargetPage = () => {
       </div>
 
       <div className="current-targets-section">
-        <h2>Your Current Goals</h2>
+        <h2>Active Goals</h2>
         {targets.length === 0 ? (
-          <p className="no-targets-message">No goals set yet. Add one above!</p>
+          <p className="no-targets-message">No goals set yet.</p>
         ) : (
           <div className="targets-list">
             {targets.map(target => (
@@ -258,8 +263,8 @@ const TargetPage = () => {
                 <div className="target-info">
                   <FontAwesomeIcon icon="bullseye" className="target-icon" />
                   <h3>{target.name}</h3>
-                  <p>Estimated: ₹{target.estimatedCost?target.estimatedCost.toFixed(2):'0.00'}</p>
-                  <p>Target Month: {target.targetMonth}</p>
+                  <p><b>Cost:</b> ₹{target.estimatedCost.toLocaleString()}</p>
+                  <p><b>Month:</b> {target.targetMonth}</p>
                 </div>
                 <button className="remove-target-btn" onClick={() => handleRemoveTarget(target._id)}>
                   <FontAwesomeIcon icon="trash-alt" />
@@ -270,8 +275,6 @@ const TargetPage = () => {
         )}
       </div>
     </div>
-    </>
-    
   );
 };
 

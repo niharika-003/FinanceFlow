@@ -1,25 +1,20 @@
 import React from 'react';
-import './Card.css';
 
-const SavingsTargetCard = ({ target, progress }) => {
-    if (!target) {
-        return <div className="card placeholder-card">No savings target set for this month.</div>;
-    }
+const SavingsTargetCard = ({ target, actualSavings }) => {
+    if (!target) return <div className="card placeholder-card">No savings target.</div>;
 
-    const { name, estimatedCost, targetMonth } = target;
-    const formattedCost = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(estimatedCost);
-    const displayProgress = Math.max(0, Math.min(100, progress)).toFixed(0);
+    const progress = Math.min(100, Math.max(0, (actualSavings / target.estimatedCost) * 100));
 
     return (
-        <div className="card savings-target-card">
-            <h3 style={{fontWeight:'bold',fontSize:'25px'}}>Savings Target</h3>
-            <p className="target-name"><b>GOAL</b>: {name}</p>
-            <div className="progress-bar-container">
-                <div className="progress-bar" style={{ width: `${displayProgress}%` }}></div>
+        <div className="card">
+            <h3 style={{fontWeight:'bold',fontSize:'22px'}}>Goal Progress</h3>
+            <p>Target: <b>{target.name}</b></p>
+            <div style={{background:'#eee', height:'12px', borderRadius:'10px', margin:'15px 0'}}>
+                <div style={{width: `${progress}%`, background: '#22c55e', height:'100%', borderRadius:'10px', transition: 'width 0.5s'}}></div>
             </div>
-            <div className="target-details">
-                <span>{formattedCost}</span> / <span>{formattedCost}</span>
-                <span className="target-month">{targetMonth}</span>
+            <div style={{display:'flex', justifyContent:'space-between', fontSize:'14px'}}>
+                <span>Saved: ₹{actualSavings > 0 ? actualSavings : 0}</span>
+                <span>Goal: ₹{target.estimatedCost}</span>
             </div>
         </div>
     );

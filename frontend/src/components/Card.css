@@ -232,3 +232,50 @@
     color: #006d77;
     font-style:normal;
 }
+
+
+/* Layout Spacing */
+.grid-col-span-2 { grid-column: span 2; }
+.subtitle { color: #64748b; font-size: 0.95rem; margin-top: -5px; }
+
+/* Category Health Bars */
+.health-list { margin-top: 15px; }
+.health-item { margin-bottom: 15px; }
+.health-info { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px; font-weight: 500; }
+.health-bar-bg { background: #E2E8F0; height: 8px; border-radius: 10px; overflow: hidden; }
+.health-bar-fill { height: 100%; transition: width 0.4s ease; }
+
+.status-safe { background: #10B981; }
+.status-warning { background: #F59E0B; }
+.status-danger { background: #EF4444; }
+.negative-text { color: #EF4444; font-weight: bold; }
+
+/* Pagination Styling */
+.pagination { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding-top: 15px; 
+    border-top: 1px solid #F1F5F9; 
+    margin-top: 10px;
+}
+.pagi-btn { 
+    padding: 5px 15px; 
+    border: 1px solid #CBD5E1; 
+    background: white; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    transition: 0.2s;
+}
+.pagi-btn:hover:not(:disabled) { background: #F8FAFC; border-color: #94A3B8; }
+.pagi-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Transaction Clean-up */
+.transaction-ul { list-style: none; padding: 0; }
+.trans-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F1F5F9; align-items: center; }
+.trans-date { color: #94A3B8; margin-right: 10px; font-size: 12px; }
+.trans-desc { font-weight: 600; color: #1E293B; }
+.trans-cat { color: #64748B; margin-left: 5px; }
+.trans-amt { font-weight: bold; color: #334155; }
+
+
