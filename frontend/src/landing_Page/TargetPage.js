@@ -59,7 +59,7 @@ const TargetPage = () => {
   const fetchMonthlySavingsLimit = async (month) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:5000/budget?month=${month}`, {
+      const response = await fetch(`https://financeflow-backend-ao63.onrender.com/budget?month=${month}`, {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -86,7 +86,7 @@ const TargetPage = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/targets', {
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/targets', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -139,7 +139,7 @@ const TargetPage = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:5000/target', {
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/target', {
         method: 'POST',
         headers: {  
           'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ const TargetPage = () => {
   const handleRemoveTarget = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:5000/target/${id}`, {
+      const response = await fetch(`https://financeflow-backend-ao63.onrender.com/target/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });

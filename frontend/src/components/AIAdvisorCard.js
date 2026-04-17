@@ -17,7 +17,7 @@ const AIAdvisorCard = () => {
       const token = localStorage.getItem('token');
       
       // Call your backend POST route
-      const res = await axios.post('http://localhost:5000/advisor', 
+      const res = await axios.post('https://financeflow-backend-ao63.onrender.com/advisor', 
         { question: userQuestion },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );

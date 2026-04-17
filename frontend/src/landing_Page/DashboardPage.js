@@ -42,9 +42,9 @@ const DashboardPage = () => {
 
       try {
         const[budgetRes, expensesRes, targetsRes] = await Promise.all([
-          axios.get(`http://localhost:5000/budget?month=${currentMonth}`, config),
-          axios.get(`http://localhost:5000/expenses?month=${currentMonth}`, config),
-          axios.get('http://localhost:5000/targets', config)
+          axios.get(`https://financeflow-backend-ao63.onrender.com/budget?month=${currentMonth}`, config),
+          axios.get(`https://financeflow-backend-ao63.onrender.com/expenses?month=${currentMonth}`, config),
+          axios.get('https://financeflow-backend-ao63.onrender.com/targets', config)
         ]);
 
         setBudget(budgetRes.data.budget);
