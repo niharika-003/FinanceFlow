@@ -21,7 +21,7 @@ function Login(){
       setIsError(false);
 
       try{
-        const response=await fetch('https://financeflow-backend-ao63.onrender.com/login',{
+        const response=await fetch('https://financeflow-backend-ao63.onrender.com/auth/login',{
           method:'POST',
           headers:{
             'Content-Type':'application/json',
