@@ -134,7 +134,7 @@ const AddexpensePage = () => {
       },2000);
       }
 
-      const response = await fetch('https://financeflow-backend-ao63.onrender.com/addexpense', { // Your backend API endpoint
+      const response = await fetch('https://financeflow-backend-ao63.onrender.com/expenses/addexpense', { // Your backend API endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
