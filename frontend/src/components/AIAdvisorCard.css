@@ -1,0 +1,87 @@
+.ai-advisor-card {
+  grid-column: span 2; 
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: #0369a1;
+}
+
+.ai-icon {
+  font-size: 24px;
+  color: #0ea5e9;
+}
+
+.ai-content {
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 15px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.ai-tip-text {
+  font-size: 16px;
+  color: #334155;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+}
+
+.ai-loading-text {
+  color: #64748b;
+  font-style: italic;
+  margin: 0;
+}
+
+.ai-input-form {
+  display: flex;
+  gap: 10px;
+}
+
+.ai-input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.ai-input:focus {
+  border-color: #0ea5e9;
+}
+
+.ai-submit-btn {
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ai-submit-btn:hover:not(:disabled) {
+  background-color: #0284c7;
+}
+
+.ai-submit-btn:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}

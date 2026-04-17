@@ -23,7 +23,7 @@ function Signup() {
     setIsError(false);
 
     try{
-      const response=await fetch('https://financeflow-backend-ao63.onrender.com/signup',{
+      const response=await fetch('http://localhost:5000/signup',{
         method:'POST',
         headers:{
           'content-type':'application/json',
